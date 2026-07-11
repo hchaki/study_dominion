@@ -36,10 +36,11 @@
         <h3><%= kind_label %></h3>
         <div class="supply">
           <% @supplies.select { |card, _| card.card_kinds.first&.kind == kind_key }.sort_by { |card, _| card.cost }.each do |card, gcs| %>
+            <% buyable = gcs.any? && @game.coins >= card.cost && @game.buys_remaining >= 1 %>
             <div class="card <%= "sold-out" if gcs.empty? %>">
               <div class="card-name"><%= card.name %></div>
               <div class="card-meta">コスト <%= card.cost %> / 残り <%= gcs.size %></div>
-              <%= button_to "買う", buy_game_path(@game, card_id: card.id), class: "buy-btn" %>
+              <%= button_to "買う", buy_game_path(@game, card_id: card.id), class: "buy-btn", disabled: !buyable %>
             </div>
           <% end %>
         </div>

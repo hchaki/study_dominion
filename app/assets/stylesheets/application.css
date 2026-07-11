@@ -17,15 +17,29 @@ body {
   padding: 1.5rem;
 }
 
-.game { max-width: 900px; margin: 0 auto; }
+.game {
+  max-width: 900px;
+  margin: 0 auto;
+}
 
-h1 { font-size: 1.4rem; }
-h2 { font-size: 1.1rem; border-bottom: 2px solid #d8cfb8; padding-bottom: .3rem; margin-top: 1.8rem; }
-h3 { font-size: .9rem; color: #7a6f57; margin: 1rem 0 .4rem; }
+h1 {
+  font-size: 1.4rem;
+}
+h2 {
+  font-size: 1.1rem;
+  border-bottom: 2px solid #d8cfb8;
+  padding-bottom: 0.3rem;
+  margin-top: 1.8rem;
+}
+h3 {
+  font-size: 0.9rem;
+  color: #7a6f57;
+  margin: 1rem 0 0.4rem;
+}
 
 .status-bar {
   display: flex;
-  gap: .6rem;
+  gap: 0.6rem;
   flex-wrap: wrap;
   margin: 1rem 0;
 }
@@ -33,48 +47,95 @@ h3 { font-size: .9rem; color: #7a6f57; margin: 1rem 0 .4rem; }
   background: #fff;
   border: 1px solid #d8cfb8;
   border-radius: 8px;
-  padding: .4rem .8rem;
-  font-size: .9rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
 }
-.stat b { font-size: 1.1rem; margin-left: .3rem; }
-.stat.coins { background: #fff7db; border-color: #e0c766; }
+.stat b {
+  font-size: 1.1rem;
+  margin-left: 0.3rem;
+}
+.stat.coins {
+  background: #fff7db;
+  border-color: #e0c766;
+}
 
-.hand { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: .8rem; }
+.hand {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.8rem;
+}
 .chip {
   background: #fff;
   border: 1px solid #c9bd9e;
   border-radius: 999px;
-  padding: .3rem .9rem;
-  font-size: .9rem;
+  padding: 0.3rem 0.9rem;
+  font-size: 0.9rem;
 }
 
-.supply { display: flex; gap: .6rem; flex-wrap: wrap; }
+.supply {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
 .card {
   background: #fff;
   border: 1px solid #c9bd9e;
   border-radius: 10px;
-  padding: .7rem;
+  padding: 0.7rem;
   width: 120px;
   text-align: center;
-  box-shadow: 0 1px 2px rgba(0,0,0,.06);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
 }
-.card-name { font-weight: bold; }
-.card-meta { font-size: .75rem; color: #7a6f57; margin: .3rem 0 .5rem; }
-.card.sold-out { opacity: .4; }
+.card-name {
+  font-weight: bold;
+}
+.card-meta {
+  font-size: 0.75rem;
+  color: #7a6f57;
+  margin: 0.3rem 0 0.5rem;
+}
+.card.sold-out {
+  opacity: 0.4;
+}
 
 button {
   cursor: pointer;
   border: none;
   border-radius: 8px;
-  padding: .45rem .9rem;
-  font-size: .85rem;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.85rem;
 }
-.buy-btn { background: #6b8e5a; color: #fff; width: 100%; }
-.use-btn { background: #8a6d3b; color: #fff; padding: .2rem .6rem; margin-left: .4rem; font-size: .75rem; }
-.action-btn { background: #4a7ba6; color: #fff; }
-.end-turn-btn { background: #a6584a; color: #fff; margin-top: 2rem; padding: .6rem 1.4rem; }
+.buy-btn {
+  background: #6b8e5a;
+  color: #fff;
+  width: 100%;
+}
+.buy-btn:disabled {
+  background: #b8b8b8;
+  cursor: not-allowed;
+}
+.use-btn {
+  background: #8a6d3b;
+  color: #fff;
+  padding: 0.2rem 0.6rem;
+  margin-left: 0.4rem;
+  font-size: 0.75rem;
+}
+.action-btn {
+  background: #4a7ba6;
+  color: #fff;
+}
+.end-turn-btn {
+  background: #a6584a;
+  color: #fff;
+  margin-top: 2rem;
+  padding: 0.6rem 1.4rem;
+}
 
-form { display: inline; }
+form {
+  display: inline;
+}
 
 .game-over {
   background: #fff;
@@ -84,6 +145,11 @@ form { display: inline; }
   text-align: center;
   margin-top: 1rem;
 }
-.final-score { font-size: 1.3rem; margin: 1rem 0 1.5rem; }
-.final-score b { font-size: 1.8rem; color: #a6584a; }
-
+.final-score {
+  font-size: 1.3rem;
+  margin: 1rem 0 1.5rem;
+}
+.final-score b {
+  font-size: 1.8rem;
+  color: #a6584a;
+}
