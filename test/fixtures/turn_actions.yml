@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  turn: one
+  game_card: one
+  action: 1
+  position: 1
+
+two:
+  turn: two
+  game_card: two
+  action: 1
+  position: 1

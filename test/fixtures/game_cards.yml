@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  game: one
+  card: one
+  game_player: one
+  place: 1
+  position: 1
+
+two:
+  game: two
+  card: two
+  game_player: two
+  place: 1
+  position: 1

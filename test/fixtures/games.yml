@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  status: 1
+  turn_phase: 1
+  actions_remaining: 1
+  buys_remaining: 1
+  coins: 1
+
+two:
+  status: 1
+  turn_phase: 1
+  actions_remaining: 1
+  buys_remaining: 1
+  coins: 1
