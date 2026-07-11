@@ -70,6 +70,7 @@ button {
   font-size: .85rem;
 }
 .buy-btn { background: #6b8e5a; color: #fff; width: 100%; }
+.use-btn { background: #8a6d3b; color: #fff; padding: .2rem .6rem; margin-left: .4rem; font-size: .75rem; }
 .action-btn { background: #4a7ba6; color: #fff; }
 .end-turn-btn { background: #a6584a; color: #fff; margin-top: 2rem; padding: .6rem 1.4rem; }
 

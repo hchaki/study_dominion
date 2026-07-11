@@ -11,8 +11,13 @@
   <section>
     <h2>手札</h2>
     <div class="hand">
-      <% @game_player.game_cards.hand.includes(:card).each do |gc| %>
-        <span class="chip"><%= gc.card.name %></span>
+      <% @game_player.game_cards.hand.includes(card: :card_kinds).each do |gc| %>
+        <span class="chip">
+          <%= gc.card.name %>
+          <% if gc.card.card_kinds.first&.kind == "action" && @game.actions_remaining >= 1 %>
+            <%= button_to "使う", play_action_game_path(@game, game_card_id: gc.id), class: "use-btn" %>
+          <% end %>
+        </span>
       <% end %>
     </div>
     <%= button_to "財宝を全部出す", play_treasures_game_path(@game), class: "action-btn" %>

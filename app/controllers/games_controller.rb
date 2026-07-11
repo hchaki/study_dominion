@@ -22,6 +22,13 @@ class GamesController < ApplicationController
     redirect_to game
   end
 
+  def play_action
+    game = Game.find(params[:id])
+    game_card = game.game_cards.find(params[:game_card_id])
+    game.game_players.first.play_action!(game_card)
+    redirect_to game
+  end
+
   def buy
     game = Game.find(params[:id])
     card = Card.find(params[:card_id])
