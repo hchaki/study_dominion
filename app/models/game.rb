@@ -21,12 +21,34 @@ class Game < ApplicationRecord
         buys_remaining: 1,
         coins: 0,
       )
-      game_player =game.game_players.create!(player: player, seat_order: 0)
-      GameCard.setup_supplies!(game: game)
-      GameCard.first_deal!(game_player: game_player )
+      game_player = game.game_players.create!(player: player, seat_order: 0)
+      game.setup_supplies!
+      game_player.first_deal!
       game_player.draw!(5)
       game.turns.create!(number: 1, game_player: game_player)
       game
+    end
+  end
+
+  def setup_supplies!
+    transaction do
+      [
+        { name: "銅貨", supply_number: 46 },
+        { name: "銀貨", supply_number: 40 },
+        { name: "金貨", supply_number: 30 },
+        { name: "屋敷", supply_number: 8 },
+        { name: "公領", supply_number: 8 },
+        { name: "属州", supply_number: 8 },
+      ].flat_map do |attrs|
+        card = Card.find_by!(name: attrs[:name])
+        attrs[:supply_number].times.map do |i|
+          game_cards.create!(
+            card: card,
+            place: :supply,
+            position: i
+          )
+        end
+      end
     end
   end
 end

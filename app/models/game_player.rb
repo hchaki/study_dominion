@@ -3,6 +3,22 @@ class GamePlayer < ApplicationRecord
   has_many :turns
   belongs_to :game
   belongs_to :player
+
+  def first_deal!
+    transaction do
+      cards = [
+        { name: "銅貨", number: 7 },
+        { name: "屋敷", number: 3 },
+      ].flat_map do |attr|
+        game.game_cards.supply.joins(:card).where(cards: {name: attr[:name]}).limit(attr[:number])
+      end
+      positions = (0...cards.count).to_a.shuffle
+      cards.zip(positions).each do |c, i|
+        c.update!(place: :draw_pile,  game_player: self, position: i)
+      end
+    end
+  end
+
   def draw!(n)
     transaction do
       remnant = game_cards.draw_pile.order(:position).to_a
