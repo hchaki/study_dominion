@@ -1,0 +1,24 @@
+<h1>ゲーム #<%= @game.id %></h1>
+
+<p>フェーズ: <%= @game.turn_phase %> /
+  アクション: <%= @game.actions_remaining %> /
+  購入: <%= @game.buys_remaining %> /
+  コイン: <%= @game.coins %></p>
+
+<h2>手札</h2>
+<%= button_to "財宝を全部出す", play_treasures_game_path(@game) %>
+<ul>
+  <% @game_player.game_cards.hand.includes(:card).each do |gc| %>
+    <li><%= gc.card.name %></li>
+  <% end %>
+</ul>
+
+<h2>サプライ</h2>
+<ul>
+  <% @game.game_cards.supply.includes(:card).group_by { |gc| gc.card.name }.each do |name, cards| %>
+    <li><%= name %>(残り <%= cards.size %>)</li>
+    <%= button_to "買う", buy_game_path(@game, card_id: cards.first.card_id) %>
+  <% end %>
+</ul>
+
+<%= button_to "ターン終了", end_turn_game_path(@game) %>
