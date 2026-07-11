@@ -76,3 +76,14 @@ button {
 
 form { display: inline; }
 
+.game-over {
+  background: #fff;
+  border: 2px solid #e0c766;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  margin-top: 1rem;
+}
+.final-score { font-size: 1.3rem; margin: 1rem 0 1.5rem; }
+.final-score b { font-size: 1.8rem; color: #a6584a; }
+
