@@ -78,6 +78,32 @@ class GamePlayer < ApplicationRecord
       )
     end
   end
+
+  def take_turn!
+    transaction do
+      play_all_treasures!
+      card = card_to_buy       # ← 何を買うか決める(下で実装)
+      buy!(card) if card
+      cleanup!
+    end
+  end
+
+  def card_to_buy
+    return Card.find_by(name: "属州") if game.coins >= 8
+    return Card.find_by(name: "金貨") if game.coins >= 6
+    return Card.find_by(name: "銀貨") if game.coins >= 3
+    return nil
+  end
+
+  def victory_points
+    counts = game_cards.joins(:card).group("cards.name").count
+    total = 0
+    Card::VICTORY_POINTS.each do |name, points|
+      total += (counts[name] || 0) * points
+    end
+    total
+  end
+
   private def reshuffle!(offset: 0)
     discard = game_cards.discard_pile.to_a
     positions = (0...discard.length).to_a.shuffle

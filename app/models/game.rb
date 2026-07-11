@@ -51,4 +51,14 @@ class Game < ApplicationRecord
       end
     end
   end
+
+  def play_until_end!
+    until game_over?
+      game_players.first.take_turn!
+    end
+  end
+
+  def game_over?
+    game_cards.supply.joins(:card).where(cards: { name: "属州"}).count == 0
+  end
 end
