@@ -37,6 +37,7 @@ class GamePlayer < ApplicationRecord
 
   def play_action!(game_card, discard: [])
     transaction do
+      raise "アクションフェイズではありません" unless game.action?
       game_card.update!(place: :in_play, position: game_cards.in_play.count)
       effects = Card::ACTION_EFFECTS[game_card.card.name]
       game.update!(
@@ -67,6 +68,7 @@ class GamePlayer < ApplicationRecord
 
   def play_all_treasures!
     transaction do
+      game.update!(turn_phase: :buy)
       game_cards.hand.joins(card: :card_kinds).where(card_kinds: { kind: :treasure}).each do |c|
         play_treasure!(c)
       end
@@ -82,7 +84,7 @@ class GamePlayer < ApplicationRecord
       raise "在庫なし" if buying.nil?
 
       buying.update!(place: :discard_pile, game_player: self, position: game_cards.discard_pile.count)
-      game.update!(coins: game.coins - card.cost, buys_remaining: game.buys_remaining - 1)
+      game.update!(coins: game.coins - card.cost, buys_remaining: game.buys_remaining - 1, turn_phase: :buy)
 
     end
   end

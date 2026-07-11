@@ -21,7 +21,7 @@
         <% @game_player.game_cards.hand.includes(card: :card_kinds).each do |gc| %>
           <span class="chip">
             <%= gc.card.name %>
-            <% if gc.card.card_kinds.first&.kind == "action" && @game.actions_remaining >= 1 %>
+            <% if gc.card.card_kinds.first&.kind == "action" && @game.actions_remaining >= 1 && @game.action? %>
               <%= button_to "使う", play_action_game_path(@game, game_card_id: gc.id), class: "use-btn" %>
             <% end %>
           </span>

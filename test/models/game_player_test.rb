@@ -60,4 +60,16 @@ action_card = game.game_cards.create!(card: village, game_player: gp, place: :ha
     assert_equal "銅貨", gp.game_cards.hand.first.card.name
     assert_equal 2, game.actions_remaining
   end
+
+  test "play_all_treasures! の後は play_action! できない" do
+    game = Game.create!(status: :playing, turn_phase: :action, actions_remaining: 1, buys_remaining: 1, coins: 0)
+    player = Player.create!(name: "テスト")
+    gp = game.game_players.create!(player: player, seat_order: 0)
+    village = Card.create!(name: "村", cost: 3)
+    action_card = game.game_cards.create!(card: village, game_player: gp, place: :hand, position: 0)
+
+    gp.play_all_treasures!   # 購入フェーズに移る
+
+    assert_raises(RuntimeError) { gp.play_action!(action_card) }
+  end
 end
