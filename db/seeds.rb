@@ -15,6 +15,14 @@
   { name: "屋敷", cost: 2, kind: :victory },
   { name: "公領", cost: 5, kind: :victory },
   { name: "属州", cost: 8, kind: :victory },
+  { name: "村", cost: 3, kind: :action },
+  { name: "鍛冶屋", cost: 4, kind: :action },
+  { name: "市場", cost: 5, kind: :action },
+  { name: "研究所", cost: 5, kind: :action },
+  { name: "木こり", cost: 3, kind: :action },
+  { name: "祝祭", cost: 5, kind: :action },
+  { name: "堀", cost: 2, kind: :action },
+  { name: "地下貯蔵庫", cost: 2, kind: :action },
 ].each do |attrs|
   card = Card.find_or_create_by!(name: attrs[:name]) { |c| c.cost = attrs[:cost] }
   card.card_kinds.find_or_create_by!(kind: attrs[:kind])

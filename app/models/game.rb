@@ -39,6 +39,14 @@ class Game < ApplicationRecord
         { name: "屋敷", supply_number: 8 },
         { name: "公領", supply_number: 8 },
         { name: "属州", supply_number: 8 },
+        { name: "村",     supply_number: 10 },
+        { name: "鍛冶屋", supply_number: 10 },
+        { name: "市場",   supply_number: 10 },
+        { name: "研究所", supply_number: 10 },
+        { name: "木こり", supply_number: 10 },
+        { name: "祝祭",   supply_number: 10 },
+        { name: "堀",     supply_number: 10 },
+        { name: "地下貯蔵庫", supply_number: 10 },
       ].flat_map do |attrs|
         card = Card.find_by!(name: attrs[:name])
         attrs[:supply_number].times.map do |i|
