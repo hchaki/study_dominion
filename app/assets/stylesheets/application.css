@@ -8,3 +8,70 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+body {
+  font-family: system-ui, sans-serif;
+  background: #f4f1ea;
+  color: #2b2b2b;
+  margin: 0;
+  padding: 1.5rem;
+}
+
+.game { max-width: 900px; margin: 0 auto; }
+
+h1 { font-size: 1.4rem; }
+h2 { font-size: 1.1rem; border-bottom: 2px solid #d8cfb8; padding-bottom: .3rem; margin-top: 1.8rem; }
+h3 { font-size: .9rem; color: #7a6f57; margin: 1rem 0 .4rem; }
+
+.status-bar {
+  display: flex;
+  gap: .6rem;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+}
+.stat {
+  background: #fff;
+  border: 1px solid #d8cfb8;
+  border-radius: 8px;
+  padding: .4rem .8rem;
+  font-size: .9rem;
+}
+.stat b { font-size: 1.1rem; margin-left: .3rem; }
+.stat.coins { background: #fff7db; border-color: #e0c766; }
+
+.hand { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: .8rem; }
+.chip {
+  background: #fff;
+  border: 1px solid #c9bd9e;
+  border-radius: 999px;
+  padding: .3rem .9rem;
+  font-size: .9rem;
+}
+
+.supply { display: flex; gap: .6rem; flex-wrap: wrap; }
+.card {
+  background: #fff;
+  border: 1px solid #c9bd9e;
+  border-radius: 10px;
+  padding: .7rem;
+  width: 120px;
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(0,0,0,.06);
+}
+.card-name { font-weight: bold; }
+.card-meta { font-size: .75rem; color: #7a6f57; margin: .3rem 0 .5rem; }
+.card.sold-out { opacity: .4; }
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  padding: .45rem .9rem;
+  font-size: .85rem;
+}
+.buy-btn { background: #6b8e5a; color: #fff; width: 100%; }
+.action-btn { background: #4a7ba6; color: #fff; }
+.end-turn-btn { background: #a6584a; color: #fff; margin-top: 2rem; padding: .6rem 1.4rem; }
+
+form { display: inline; }
+

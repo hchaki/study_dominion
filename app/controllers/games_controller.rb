@@ -12,6 +12,8 @@ class GamesController < ApplicationController
   def show
     @game = Game.find(params[:id])
     @game_player = @game.game_players.first
+    # サプライを {カード => 残りgame_cards} にまとめる(card_kinds も一緒に読んで N+1 を防ぐ)
+    @supplies = @game.game_cards.supply.includes(card: :card_kinds).group_by(&:card)
   end
 
   def play_treasures
