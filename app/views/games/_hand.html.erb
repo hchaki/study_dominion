@@ -1,0 +1,36 @@
+<section>
+  <h2>手札</h2>
+  <% hand = game_player.game_cards.hand.includes(card: :card_kinds).to_a %>
+  <div class="hand">
+    <% hand.each do |gc| %>
+      <span class="chip"><%= gc.card.name %></span>
+    <% end %>
+  </div>
+
+  <% if game.action? && game.actions_remaining >= 1 %>
+    <div class="play-actions">
+      <% hand.select { |gc| gc.card.card_kinds.first&.kind == "action" }.each do |gc| %>
+        <% if Card::SELECTION_ACTIONS.include?(gc.card.name) %>
+          <%= form_with url: play_action_game_path(game), method: :post do %>
+            <%= hidden_field_tag :game_card_id, gc.id %>
+            <div class="select-play">
+              <b><%= gc.card.name %></b> を使う — 対象を選択:
+              <% hand.reject { |h| h.id == gc.id }.each do |h| %>
+                <label><%= check_box_tag "target_ids[]", h.id %> <%= h.card.name %></label>
+              <% end %>
+              <%= submit_tag "使う", class: "use-btn" %>
+            </div>
+          <% end %>
+        <% else %>
+          <%= button_to "#{gc.card.name} を使う", play_action_game_path(game, game_card_id: gc.id), class: "use-btn" %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if game.action? %>
+    <%= button_to "アクションを終える", to_buy_phase_game_path(game), class: "action-btn" %>
+  <% else %>
+    <%= button_to "財宝を全部出す", play_treasures_game_path(game), class: "action-btn" %>
+  <% end %>
+</section>

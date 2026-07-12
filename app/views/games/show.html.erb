@@ -2,80 +2,11 @@
   <h1>ゲーム #<%= @game.id %></h1>
 
   <% if @game.game_over? %>
-    <% ranking = @game.game_players.includes(:player).sort_by { |gp| -gp.victory_points } %>
-    <div class="game-over">
-      <h2>ゲーム終了</h2>
-      <p class="final-score">勝者: <b><%= ranking.first.player.name %></b></p>
-      <ul>
-        <% ranking.each do |gp| %>
-          <li><%= gp.player.name %>: <%= gp.victory_points %> 点</li>
-        <% end %>
-      </ul>
-      <%= button_to "もう一度遊ぶ", games_path, class: "action-btn" %>
-    </div>
+    <%= render "game_over", game: @game %>
   <% else %>
-    <div class="status-bar">
-      <span class="stat">手番 <b><%= @game_player.player.name %></b></span>
-      <span class="stat">フェーズ <b><%= @game.turn_phase %></b></span>
-      <span class="stat">アクション <b><%= @game.actions_remaining %></b></span>
-      <span class="stat">購入 <b><%= @game.buys_remaining %></b></span>
-      <span class="stat coins">コイン <b><%= @game.coins %></b></span>
-    </div>
-
-    <section>
-      <h2>手札</h2>
-      <% hand = @game_player.game_cards.hand.includes(card: :card_kinds).to_a %>
-      <div class="hand">
-        <% hand.each do |gc| %>
-          <span class="chip"><%= gc.card.name %></span>
-        <% end %>
-      </div>
-
-      <% if @game.action? && @game.actions_remaining >= 1 %>
-        <div class="play-actions">
-          <% hand.select { |gc| gc.card.card_kinds.first&.kind == "action" }.each do |gc| %>
-            <% if Card::SELECTION_ACTIONS.include?(gc.card.name) %>
-              <%= form_with url: play_action_game_path(@game), method: :post do %>
-                <%= hidden_field_tag :game_card_id, gc.id %>
-                <div class="select-play">
-                  <b><%= gc.card.name %></b> を使う — 対象を選択:
-                  <% hand.reject { |h| h.id == gc.id }.each do |h| %>
-                    <label><%= check_box_tag "target_ids[]", h.id %> <%= h.card.name %></label>
-                  <% end %>
-                  <%= submit_tag "使う", class: "use-btn" %>
-                </div>
-              <% end %>
-            <% else %>
-              <%= button_to "#{gc.card.name} を使う", play_action_game_path(@game, game_card_id: gc.id), class: "use-btn" %>
-            <% end %>
-          <% end %>
-        </div>
-      <% end %>
-
-      <% if @game.action? %>
-        <%= button_to "アクションを終える", to_buy_phase_game_path(@game), class: "action-btn" %>
-      <% else %>
-        <%= button_to "財宝を全部出す", play_treasures_game_path(@game), class: "action-btn" %>
-      <% end %>
-    </section>
-
-    <section>
-      <h2>サプライ</h2>
-      <% { "treasure" => "財宝", "victory" => "勝利点", "action" => "アクション" }.each do |kind_key, kind_label| %>
-        <h3><%= kind_label %></h3>
-        <div class="supply">
-          <% @supplies.select { |card, _| card.card_kinds.first&.kind == kind_key }.sort_by { |card, _| card.cost }.each do |card, gcs| %>
-            <% buyable = gcs.any? && @game.coins >= card.cost && @game.buys_remaining >= 1 %>
-            <div class="card <%= "sold-out" if gcs.empty? %>">
-              <div class="card-name"><%= card.name %></div>
-              <div class="card-meta">コスト <%= card.cost %> / 残り <%= gcs.size %></div>
-              <%= button_to "買う", buy_game_path(@game, card_id: card.id), class: "buy-btn", disabled: !buyable %>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
-    </section>
-
+    <%= render "status_bar", game: @game, game_player: @game_player %>
+    <%= render "hand", game: @game, game_player: @game_player %>
+    <%= render "supply", game: @game, supplies: @supplies %>
     <%= button_to "ターン終了", end_turn_game_path(@game), class: "end-turn-btn" %>
   <% end %>
 </div>
