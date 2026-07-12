@@ -4,11 +4,10 @@ class GamesController < ApplicationController
   end
 
   def create
-    players = [
-      Player.find_or_create_by!(name: "プレイヤー1"),
-      Player.find_or_create_by!(name: "プレイヤー2"),
-    ]
-    game = Game.setup!(players: players)
+    game = Game.setup!(participants: [
+      { player: Player.find_or_create_by!(name: "あなた"), cpu: false },
+      { player: Player.find_or_create_by!(name: "CPU"), cpu: true },
+    ])
     redirect_to game
   end
 
@@ -44,6 +43,7 @@ class GamesController < ApplicationController
   def end_turn
     game = Game.find(params[:id])
     game.end_turn!
+    game.play_cpu_turns!   # 手番が CPU に移ったら自動でプレイして人間に戻す
     redirect_to game
   end
 

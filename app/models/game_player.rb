@@ -105,12 +105,12 @@ class GamePlayer < ApplicationRecord
     end
   end
 
+  # Big Money AI: 財宝を出して1枚買うだけ(後片付け・手番送りは Game#end_turn! に任せる)
   def take_turn!
     transaction do
       play_all_treasures!
-      card = card_to_buy       # ← 何を買うか決める(下で実装)
+      card = card_to_buy
       buy!(card) if card
-      cleanup!
     end
   end
 

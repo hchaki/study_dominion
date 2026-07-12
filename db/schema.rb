@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_08_220335) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_12_143802) do
   create_table "card_kinds", force: :cascade do |t|
     t.integer "card_id", null: false
     t.datetime "created_at", null: false
@@ -41,6 +41,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_08_220335) do
   end
 
   create_table "game_players", force: :cascade do |t|
+    t.boolean "cpu", default: false, null: false
     t.datetime "created_at", null: false
     t.integer "game_id", null: false
     t.integer "player_id", null: false

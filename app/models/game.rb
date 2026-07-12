@@ -12,7 +12,8 @@ class Game < ApplicationRecord
     buy: 1,
     cleanup: 2
   }
-  def self.setup!(players:)
+  def self.setup!(participants:)
+    # participants: [{ player:, cpu: }, ...] の配列(座席順)
     transaction do
       game = create!(
         status: :playing,
@@ -22,8 +23,8 @@ class Game < ApplicationRecord
         coins: 0,
       )
       game.setup_supplies!
-      seated = players.each_with_index.map do |player, i|
-        game_player = game.game_players.create!(player: player, seat_order: i)
+      seated = participants.each_with_index.map do |part, i|
+        game_player = game.game_players.create!(player: part[:player], seat_order: i, cpu: part[:cpu])
         game_player.first_deal!
         game_player.draw!(5)
         game_player
@@ -84,9 +85,18 @@ class Game < ApplicationRecord
     end
   end
 
+  # 現在の手番が CPU の間、自動でプレイして手番を進める(人間の番に戻るまで)
+  def play_cpu_turns!
+    while !game_over? && current_game_player.cpu?
+      current_game_player.take_turn!
+      end_turn!
+    end
+  end
+
   def play_until_end!
     until game_over?
-      game_players.first.take_turn!
+      current_game_player.take_turn!
+      end_turn!
     end
   end
 
