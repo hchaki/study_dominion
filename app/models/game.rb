@@ -12,7 +12,7 @@ class Game < ApplicationRecord
     buy: 1,
     cleanup: 2
   }
-  def self.setup!(player:)
+  def self.setup!(players:)
     transaction do
       game = create!(
         status: :playing,
@@ -21,12 +21,34 @@ class Game < ApplicationRecord
         buys_remaining: 1,
         coins: 0,
       )
-      game_player = game.game_players.create!(player: player, seat_order: 0)
       game.setup_supplies!
-      game_player.first_deal!
-      game_player.draw!(5)
-      game.turns.create!(number: 1, game_player: game_player)
+      seated = players.each_with_index.map do |player, i|
+        game_player = game.game_players.create!(player: player, seat_order: i)
+        game_player.first_deal!
+        game_player.draw!(5)
+        game_player
+      end
+      game.turns.create!(number: 1, game_player: seated.first)
       game
+    end
+  end
+
+  # 今の手番プレイヤー = 最新の turn の game_player(turns が手番の正データ)
+  def current_game_player
+    turns.order(:number).last.game_player
+  end
+
+  # 次の手番プレイヤー(seat_order を1つ進め、一周したら先頭に戻る)
+  def next_game_player
+    order = (current_game_player.seat_order + 1) % game_players.count
+    game_players.find_by(seat_order: order)
+  end
+
+  # 手番を終える: 今のプレイヤーが後片付け → 次のプレイヤーの turn を作る
+  def end_turn!
+    transaction do
+      current_game_player.cleanup!
+      turns.create!(number: turns.count + 1, game_player: next_game_player)
     end
   end
 

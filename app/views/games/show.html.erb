@@ -2,13 +2,20 @@
   <h1>ゲーム #<%= @game.id %></h1>
 
   <% if @game.game_over? %>
+    <% ranking = @game.game_players.includes(:player).sort_by { |gp| -gp.victory_points } %>
     <div class="game-over">
       <h2>ゲーム終了</h2>
-      <p class="final-score">あなたの勝利点: <b><%= @game_player.victory_points %></b></p>
+      <p class="final-score">勝者: <b><%= ranking.first.player.name %></b></p>
+      <ul>
+        <% ranking.each do |gp| %>
+          <li><%= gp.player.name %>: <%= gp.victory_points %> 点</li>
+        <% end %>
+      </ul>
       <%= button_to "もう一度遊ぶ", games_path, class: "action-btn" %>
     </div>
   <% else %>
     <div class="status-bar">
+      <span class="stat">手番 <b><%= @game_player.player.name %></b></span>
       <span class="stat">フェーズ <b><%= @game.turn_phase %></b></span>
       <span class="stat">アクション <b><%= @game.actions_remaining %></b></span>
       <span class="stat">購入 <b><%= @game.buys_remaining %></b></span>
