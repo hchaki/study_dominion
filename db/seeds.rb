@@ -23,6 +23,8 @@
   { name: "祝祭", cost: 5, kind: :action },
   { name: "堀", cost: 2, kind: :action },
   { name: "地下貯蔵庫", cost: 2, kind: :action },
+  { name: "議事堂", cost: 5, kind: :action },
+  { name: "礼拝堂", cost: 2, kind: :action },
 ].each do |attrs|
   card = Card.find_or_create_by!(name: attrs[:name]) { |c| c.cost = attrs[:cost] }
   card.card_kinds.find_or_create_by!(kind: attrs[:kind])

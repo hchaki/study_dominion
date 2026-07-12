@@ -11,5 +11,9 @@ class Card < ApplicationRecord
     "祝祭"   => { cards: 0, actions: 2, buys: 1, coins: 2 },
     "堀"     => { cards: 2, actions: 0, buys: 0, coins: 0 },
     "地下貯蔵庫" => { cards: 0, actions: 1, buys: 0, coins: 0 },
+    "議事堂" => { cards: 4, actions: 0, buys: 1, coins: 0 },
+    "礼拝堂" => { cards: 0, actions: 0, buys: 0, coins: 0 },
   }.freeze
+  # プレイ時に対象カードの選択が必要なアクションカード
+  SELECTION_ACTIONS = %w[地下貯蔵庫 礼拝堂].freeze
 end

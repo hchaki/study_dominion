@@ -137,6 +137,16 @@ form {
   display: inline;
 }
 
+.play-actions { margin: .6rem 0; }
+.select-play {
+  background: #fff;
+  border: 1px dashed #c9bd9e;
+  border-radius: 8px;
+  padding: .6rem;
+  margin: .4rem 0;
+}
+.select-play label { margin: 0 .6rem; white-space: nowrap; }
+
 .game-over {
   background: #fff;
   border: 2px solid #e0c766;

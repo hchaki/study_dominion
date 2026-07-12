@@ -72,4 +72,18 @@ action_card = game.game_cards.create!(card: village, game_player: gp, place: :ha
 
     assert_raises(RuntimeError) { gp.play_action!(action_card) }
   end
+
+  test "play_action! (礼拝堂)は選んだカードを廃棄する" do
+    game = Game.create!(status: :playing, turn_phase: :action, actions_remaining: 1, buys_remaining: 1, coins: 0)
+    player = Player.create!(name: "テスト")
+    gp = game.game_players.create!(player: player, seat_order: 0)
+    chapel = Card.create!(name: "礼拝堂", cost: 2)
+    estate = Card.create!(name: "屋敷", cost: 2)
+    chapel_card = game.game_cards.create!(card: chapel, game_player: gp, place: :hand, position: 0)
+    trash_me = game.game_cards.create!(card: estate, game_player: gp, place: :hand, position: 1)
+
+    gp.play_action!(chapel_card, targets: [trash_me])
+
+    assert_equal "trash", trash_me.reload.place
+  end
 end

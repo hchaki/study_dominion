@@ -47,6 +47,8 @@ class Game < ApplicationRecord
         { name: "祝祭",   supply_number: 10 },
         { name: "堀",     supply_number: 10 },
         { name: "地下貯蔵庫", supply_number: 10 },
+        { name: "議事堂", supply_number: 10 },
+        { name: "礼拝堂", supply_number: 10 },
       ].flat_map do |attrs|
         card = Card.find_by!(name: attrs[:name])
         attrs[:supply_number].times.map do |i|

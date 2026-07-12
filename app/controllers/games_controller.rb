@@ -24,8 +24,10 @@ class GamesController < ApplicationController
 
   def play_action
     game = Game.find(params[:id])
+    game_player = game.game_players.first
     game_card = game.game_cards.find(params[:game_card_id])
-    game.game_players.first.play_action!(game_card)
+    targets = game_player.game_cards.where(id: params[:target_ids]).to_a
+    game_player.play_action!(game_card, targets: targets)
     redirect_to game
   end
 

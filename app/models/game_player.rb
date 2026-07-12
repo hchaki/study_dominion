@@ -35,7 +35,7 @@ class GamePlayer < ApplicationRecord
     end
   end
 
-  def play_action!(game_card, discard: [])
+  def play_action!(game_card, targets: [])
     transaction do
       raise "アクションフェイズではありません" unless game.action?
       game_card.update!(place: :in_play, position: game_cards.in_play.count)
@@ -47,14 +47,16 @@ class GamePlayer < ApplicationRecord
       )
       draw!(effects[:cards]) if effects[:cards] >= 1
 
-      # 手続き効果(地下貯蔵庫: 渡されたカードを捨て、同じ枚数引く)
-      if game_card.card.name == "地下貯蔵庫"
-        # discard の各カードを discard_pile へ移し、そのあと draw!(discard.size)
-        discard.each do |c|
+      case game_card.card.name
+      when "地下貯蔵庫"
+        targets.each do |c|
           c.update!(place: :discard_pile, position: game_cards.discard_pile.count)
         end
-        draw!(discard.size)
+        draw!(targets.size)
+      when "礼拝堂"
+        targets.each { |c| c.update!(place: :trash) }
       end
+
     end
   end
 
