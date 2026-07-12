@@ -41,4 +41,10 @@ class GamesController < ApplicationController
     game.game_players.first.cleanup!
     redirect_to game
   end
+
+  def to_buy_phase
+    game = Game.find(params[:id])
+    game.update!(turn_phase: :buy)
+    redirect_to game
+  end
 end

@@ -27,7 +27,11 @@
           </span>
         <% end %>
       </div>
-      <%= button_to "財宝を全部出す", play_treasures_game_path(@game), class: "action-btn" %>
+      <% if @game.action? %>
+        <%= button_to "アクションを終える", to_buy_phase_game_path(@game), class: "action-btn" %>
+      <% elsif %>
+        <%= button_to "財宝を全部出す", play_treasures_game_path(@game), class: "action-btn" %>
+      <% end %>
     </section>
 
     <section>

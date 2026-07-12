@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       post :play_treasures
       post :play_action
       post :buy
+      post :to_buy_phase
       post :end_turn
     end
   end
